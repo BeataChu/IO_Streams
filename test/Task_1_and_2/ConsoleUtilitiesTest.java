@@ -13,23 +13,23 @@ import static org.junit.Assert.*;
 public class ConsoleUtilitiesTest {
 
 
-    final String input = "SomeRandomFileName";
-    final String prompt = "Введите имя файла для чтения - тест:";
-    final String crlf = "\n";
-    final String consoleInput = input+crlf;
+    final String INPUT = "SomeRandomFileName";
+    final String PROMPT = "Введите имя файла для чтения - тест:";
+    final String CRLF = "\n";
+    final String CONSOLE_INPUT = INPUT+CRLF;
 
     @Test
     public void testReadRandomName(){
-        InputStream is = new ByteArrayInputStream(consoleInput.getBytes());
+        InputStream is = new ByteArrayInputStream(CONSOLE_INPUT.getBytes());
         System.setIn(is);
-        assertEquals(input, ConsoleUtilities.readFileName(prompt));
+        assertEquals(INPUT, ConsoleUtilities.readFileName(PROMPT));
     }
 
     @Test
     public void testReadEmptyName() throws IOException {
-        InputStream is = new ByteArrayInputStream((crlf + consoleInput).getBytes());
+        InputStream is = new ByteArrayInputStream((CRLF + CONSOLE_INPUT).getBytes());
         System.setIn(is);
-        assertEquals(input, ConsoleUtilities.readFileName(prompt));
+        assertEquals(INPUT, ConsoleUtilities.readFileName(PROMPT));
     }
 
     @Rule
@@ -38,8 +38,8 @@ public class ConsoleUtilitiesTest {
     public void testException() throws IOException {
         expectedException.expect(NullPointerException.class);
 
-        InputStream is = new ByteArrayInputStream(consoleInput.getBytes());
+        InputStream is = new ByteArrayInputStream(CONSOLE_INPUT.getBytes());
         System.setIn(null);
-        assertEquals(input, ConsoleUtilities.readFileName(prompt));
+        assertEquals(INPUT, ConsoleUtilities.readFileName(PROMPT));
     }
 }
