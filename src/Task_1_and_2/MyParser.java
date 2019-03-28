@@ -4,6 +4,7 @@ package Task_1_and_2;
 public class MyParser {
 
     public static void parse(MyStream stream){
+        if (stream == null) throw new NullPointerException("Передан пустой объект");
         KeyWordCounter data = new KeyWordCounter();
         System.out.println("Сейчас мы будем считывать и записывать файл.");
         String inputFile = ConsoleUtilities.readFileName("Введите имя файла для чтения:");
