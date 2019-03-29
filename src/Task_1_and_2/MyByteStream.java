@@ -28,11 +28,17 @@ public class MyByteStream implements MyStream {
 
     @Override
     public void writeKeysToFile(String filename, String text) {
+        try {
+            File myFile = new File(filename);
+            myFile.createNewFile(); // if file already exists will do nothing
+        } catch (IOException ex) {
+            System.out.println("Неправильное имя файла.");
+        }
         try (FileOutputStream fos = new FileOutputStream(filename)) {
             byte[] buffer = text.getBytes();
             fos.write(buffer, 0, buffer.length);
         } catch (IOException ex) {
-            System.out.println("Ну вот, записать не получилось. Попробуй еще раз");
+            System.out.println("Ну вот, записать не получилось. Попробуй еще раз.");
         }
         System.out.println("Файл записан");
 

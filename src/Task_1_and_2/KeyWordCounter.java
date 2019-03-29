@@ -29,4 +29,9 @@ public class KeyWordCounter {
         return sb.toString();
     }
 
+    //метод для тестов, чтобы получить доступ к Мапе
+    public Map<String, Integer> getMap(){
+        return keyMap;
+    }
+
 }

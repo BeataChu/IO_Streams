@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 public class ConsoleUtilities {
 
     //класс для чтения файловых имен
-    public static String readFileName(String prompt) {
+    public static String readFileName(String prompt) throws IOException {
         boolean ok = true;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String fileName = "";
@@ -26,7 +26,7 @@ public class ConsoleUtilities {
             }
             catch (IOException ex) {
                 System.out.println(ex.getMessage());
-                ok = false;
+                throw ex;
             }
         } while (!ok);
 

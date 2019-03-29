@@ -19,7 +19,7 @@ public class ConsoleUtilitiesTest {
     final String CONSOLE_INPUT = INPUT+CRLF;
 
     @Test
-    public void testReadRandomName(){
+    public void testReadRandomName() throws IOException {
         InputStream is = new ByteArrayInputStream(CONSOLE_INPUT.getBytes());
         System.setIn(is);
         assertEquals(INPUT, ConsoleUtilities.readFileName(PROMPT));
@@ -33,13 +33,23 @@ public class ConsoleUtilitiesTest {
     }
 
     @Rule
-    public ExpectedException expectedException = ExpectedException.none();
+    public ExpectedException expectedNPException = ExpectedException.none();
     @Test
-    public void testException() throws IOException {
-        expectedException.expect(NullPointerException.class);
+    public void testNPException() throws IOException {
+        expectedNPException.expect(NullPointerException.class);
 
         InputStream is = new ByteArrayInputStream(CONSOLE_INPUT.getBytes());
         System.setIn(null);
+        assertEquals(INPUT, ConsoleUtilities.readFileName(PROMPT));
+    }
+
+    @Rule
+    public ExpectedException expectedIOException = ExpectedException.none();
+    @Test
+    public void testIOException() throws IOException{
+        expectedIOException.expect(IOException.class);
+        System.in.close();
+
         assertEquals(INPUT, ConsoleUtilities.readFileName(PROMPT));
     }
 }
