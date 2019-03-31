@@ -3,7 +3,7 @@ package Task_1_and_2;
 import java.io.IOException;
 
 /* класс для запуска работы потоков */
-public class MyParser {
+private class MyParser {
 
     public static void parse(MyStream stream) {
         if (stream == null) throw new NullPointerException("Передан пустой объект");
