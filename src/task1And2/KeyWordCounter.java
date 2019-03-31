@@ -1,4 +1,4 @@
-package Task_1_and_2;
+package task1And2;
 
 import javax.lang.model.SourceVersion;
 import java.util.Map;

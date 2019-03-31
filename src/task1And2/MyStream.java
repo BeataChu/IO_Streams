@@ -1,4 +1,4 @@
-package Task_1_and_2;
+package task1And2;
 
 public interface MyStream {
     //читаем содержимое файла и переводим его в массив строк

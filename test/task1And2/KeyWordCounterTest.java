@@ -1,4 +1,4 @@
-package Task_1_and_2;
+package task1And2;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,6 +14,9 @@ import static org.junit.Assert.*;
 public class KeyWordCounterTest {
     Map<String, Integer> testKeyMap = new TreeMap<>();
     KeyWordCounter myKeyCounter;
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {
@@ -35,8 +38,6 @@ public class KeyWordCounterTest {
 
     }
 
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
     @Test
     public void testAddKeysToMapFromNullArr() {
         expectedException.expect(NullPointerException.class);

@@ -1,4 +1,4 @@
-package Task_1_and_2;
+package task1And2;
 
 import org.junit.After;
 import org.junit.Before;
@@ -7,8 +7,6 @@ import org.junit.Test;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 import static java.io.File.createTempFile;
 import static org.junit.Assert.*;

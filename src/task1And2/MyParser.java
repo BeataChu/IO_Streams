@@ -1,12 +1,17 @@
-package Task_1_and_2;
+package task1And2;
 
 import java.io.IOException;
 
 /* класс для запуска работы потоков */
-private class MyParser {
+public class MyParser {
+    private MyParser(){
+
+    }
 
     public static void parse(MyStream stream) {
-        if (stream == null) throw new NullPointerException("Передан пустой объект");
+        if (stream == null){
+            throw new NullPointerException("Передан пустой объект");
+        }
         KeyWordCounter data = new KeyWordCounter();
         System.out.println("Сейчас мы будем считывать и записывать файл.");
         String inputFile = null;

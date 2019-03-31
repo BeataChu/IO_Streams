@@ -1,12 +1,10 @@
-package Task_1_and_2;
+package task1And2;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-public class MyParserTest {
+public class MyCharStreamTest {
 
     @Before
     public void setUp() throws Exception {
@@ -17,6 +15,10 @@ public class MyParserTest {
     }
 
     @Test
-    public void parse() {
+    public void readText() {
+    }
+
+    @Test
+    public void writeKeysToFile() {
     }
 }
