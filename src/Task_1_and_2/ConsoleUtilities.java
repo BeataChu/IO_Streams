@@ -1,14 +1,14 @@
-package Task_1_and_2;
+package task1and2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 
-//читаем имя файла
-public class ConsoleUtilities {
+//класс для чтения файловых имен
+private class ConsoleUtilities {
 
-    //класс для чтения файловых имен
+    //читаем имя файла
     public static String readFileName(String prompt) throws IOException {
         boolean ok = true;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
