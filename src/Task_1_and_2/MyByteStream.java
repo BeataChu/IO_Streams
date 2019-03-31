@@ -30,7 +30,7 @@ public class MyByteStream implements MyStream {
     public void writeKeysToFile(String filename, String text) {
         try {
             File myFile = new File(filename);
-            myFile.createNewFile(); // if file already exists will do nothing
+            myFile.createNewFile();
         } catch (IOException ex) {
             System.out.println("Неправильное имя файла.");
         }
