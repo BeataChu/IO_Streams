@@ -39,7 +39,7 @@ public class KeyWordCounterTest {
     }
 
     @Test
-    public void testAddKeysToMapFromNullArr() {
+    public void testWhenNullArrThrowsException() {
         expectedException.expect(NullPointerException.class);
         String[] arr = null;
         myKeyCounter.addKeysToMap(arr);

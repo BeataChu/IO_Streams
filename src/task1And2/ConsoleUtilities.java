@@ -2,20 +2,25 @@ package task1And2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 
 //класс для чтения файловых имен
 public class ConsoleUtilities {
 
-    private ConsoleUtilities() {
+    InputStream in;
+    BufferedReader reader;
 
+    public ConsoleUtilities(InputStream in) {
+        this.in = in;
+        reader = new BufferedReader(new InputStreamReader(in));
     }
 
     //читаем имя файла
-    public static String readFileName(String prompt) throws IOException {
+    public String readFileName(String prompt) throws IOException {
         boolean ok = true;
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
         String fileName = "";
         do {
             try {

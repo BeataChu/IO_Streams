@@ -8,11 +8,10 @@ public class AllStreams {
 
     public static void main(String[] args) {
 
-        MyParser.parse(new MyByteStream());
+        MyParser.parse(System.in, new MyByteStream());
 
-        MyParser.parse(new MyCharStream());
+        MyParser.parse(System.in, new MyCharStream());
 
-        MyParser.parse(new MyConsoleStream());
     }
 
 

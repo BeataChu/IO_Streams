@@ -14,6 +14,8 @@ public class ConsoleUtilitiesTest {
     final String PROMPT = "Введите имя файла для чтения - тест:";
     final String CRLF = "\n";
     final String CONSOLE_INPUT = INPUT+CRLF;
+    InputStream in;
+    ConsoleUtilities consoleUtilities;
 
     @Rule
     public ExpectedException expectedNPException = ExpectedException.none();
@@ -22,32 +24,32 @@ public class ConsoleUtilitiesTest {
 
     @Test
     public void testReadRandomName() throws IOException {
-        InputStream is = new ByteArrayInputStream(CONSOLE_INPUT.getBytes());
-        System.setIn(is);
-        assertEquals(INPUT, ConsoleUtilities.readFileName(PROMPT));
+        in = new ByteArrayInputStream(CONSOLE_INPUT.getBytes());
+        consoleUtilities = new ConsoleUtilities(in);
+        assertEquals(INPUT, consoleUtilities.readFileName(PROMPT));
     }
 
     @Test
     public void testReadEmptyName() throws IOException {
-        InputStream is = new ByteArrayInputStream((CRLF + CONSOLE_INPUT).getBytes());
-        System.setIn(is);
-        assertEquals(INPUT, ConsoleUtilities.readFileName(PROMPT));
+        in = new ByteArrayInputStream((CRLF + CONSOLE_INPUT).getBytes());
+        consoleUtilities = new ConsoleUtilities(in);
+        assertEquals(INPUT, consoleUtilities.readFileName(PROMPT));
     }
 
     @Test
-    public void testNPException() throws IOException {
+    public void testIfInputStreamIsNullThrowNPException() throws IOException {
         expectedNPException.expect(NullPointerException.class);
-
-        InputStream is = new ByteArrayInputStream(CONSOLE_INPUT.getBytes());
-        System.setIn(null);
-        assertEquals(INPUT, ConsoleUtilities.readFileName(PROMPT));
+        consoleUtilities = new ConsoleUtilities(null);
+        assertEquals(INPUT, consoleUtilities.readFileName(PROMPT));
     }
 
     @Test
-    public void testIOException() throws IOException{
+    public void testIfInputStreamIsClosedThrowIOException() throws IOException{
         expectedIOException.expect(IOException.class);
-        System.in.close();
+        in = System.in;
+        consoleUtilities = new ConsoleUtilities((in));
+        in.close();
 
-        assertEquals(INPUT, ConsoleUtilities.readFileName(PROMPT));
+        assertEquals(INPUT, consoleUtilities.readFileName(PROMPT));
     }
 }
