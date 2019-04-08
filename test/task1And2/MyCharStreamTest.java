@@ -46,12 +46,12 @@ public class MyCharStreamTest {
         assertArrayEquals(expected, charStream.readText(tempFile.getAbsolutePath()));
     }
 
+    //ВОТ ЭТОТ ТЕСТ НЕ РАБОТАЕТ :(
     @Test
     public void ifReadFileNameIsWrongThrowFNFException() throws FileNotFoundException {
-        tempFile.delete();
+        tempFile.deleteOnExit();
         expectedException.expect(FileNotFoundException.class);
         charStream.readText(tempFile.getAbsolutePath());
-
 
     }
 

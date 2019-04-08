@@ -49,10 +49,11 @@ public class MyByteStreamTest {
         assertArrayEquals(expected, byteStream.readText(tempFile.getAbsolutePath()));
     }
 
+    //ВОТ ЭТОТ ТЕСТ НЕ РАБОТАЕТ :(
     @Test
     public void ifReadFileNameIsWrongThrowFNFException()  {
         expectedException.expect(FileNotFoundException.class);
-        tempFile.delete();
+        tempFile.deleteOnExit();
         byteStream.readText(tempFile.getAbsolutePath());
 
 

@@ -4,6 +4,7 @@ import java.io.*;
 
 /*класс с байтовыми потоками */
 public class MyByteStream implements MyStream {
+    final String NO_SUCH_FILE = "Я не нашел файл для чтения с таким именем. Попробуйте еще разок";
     @Override
     public String[] readText(String inputFile) {
         String bytesToString = "";
@@ -17,7 +18,8 @@ public class MyByteStream implements MyStream {
             bytesToString = buf.toString();
             System.out.println ("Текст прочитан");
         } catch (FileNotFoundException e) {
-            System.out.println("Я не нашел файл для чтения с таким именем. Попробуйте еще разок");
+            System.out.println(NO_SUCH_FILE);
+            System.exit(-1);
 
         } catch (IOException ex) {
             System.out.println("Попытка чтения не удалась.");
