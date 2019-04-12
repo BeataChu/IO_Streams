@@ -14,6 +14,7 @@ public class Serializer {
 
     public static void serializeObj(String filename, MovieCollection movieCollection) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
+        movieCollection.increaseVersion();
         oos.writeObject(movieCollection);
         oos.flush();
         oos.close();
@@ -24,7 +25,9 @@ public class Serializer {
         ObjectInputStream oin = new ObjectInputStream(new FileInputStream(filename));
         MovieCollection movieCollection = (MovieCollection) oin.readObject();
         System.out.print("Объект был десериализован, версия коллекции: " + movieCollection.getVersion());
+        oin.close();
         return movieCollection;
+
     }
 }
 

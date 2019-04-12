@@ -9,8 +9,8 @@ import java.io.InputStreamReader;
 //класс для чтения файловых имен
 public class ConsoleUtilities {
 
-    InputStream in;
-    BufferedReader reader;
+    protected InputStream in;
+    protected BufferedReader reader;
 
     public ConsoleUtilities(InputStream in) {
         this.in = in;

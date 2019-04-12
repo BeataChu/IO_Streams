@@ -1,11 +1,14 @@
 package task3;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.*;
 
 /* класс для коллекции фильмов, реализован в виде синглтона */
 
 public class MovieCollection implements Serializable {
+    Movie movie;
     //поле синглтона, которое позволяет отслеживать версии
     private int version = 0;
 
@@ -37,11 +40,17 @@ public class MovieCollection implements Serializable {
     }
 
     public void addMovie(Movie movie){
-        collection.add(movie);
+       collection.add(movie);
     }
 
-    public void deleteMovie(Movie movie){
-                collection.remove(movie);
+    public void deleteMovie(String movieName){
+        Iterator<Movie> iter = collection.iterator();
+        while(iter.hasNext()){
+            Movie iterMovie = iter.next();
+            if (iterMovie.getName().equals(movieName)){
+                iter.remove();
+            }
+        }
     }
 
     public Set<Actor> getSetOfAllActors(){
@@ -50,6 +59,17 @@ public class MovieCollection implements Serializable {
             setOfAllActors.addAll(anyMovie.getCast());
         }
         return setOfAllActors;
+    }
+
+    public String addActorToMovieByMovieName(String movieName, Actor actor) {
+        String result = "";
+        for (Movie movie : collection) {
+            if (movie.getName().equals(movieName)) {
+                result = movie.addActor(actor) + "\n" + actor.addMovie(movie);
+                break;
+            }
+        }
+        return result;
     }
 
 
