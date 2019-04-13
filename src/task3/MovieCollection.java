@@ -21,8 +21,10 @@ public class MovieCollection implements Serializable {
     }
 
     //компаратор на основе года выпуска фильма
-    Comparator<Movie> comparator = Comparator.comparing(obj -> obj.getYearOfRelease());
-    Set<Movie> collection = new TreeSet<>(comparator);
+    Comparator<Movie> comparatorM = Comparator.comparing(obj -> obj.getYearOfRelease());
+    Comparator<Actor> comparatorA = Comparator.comparing(obj -> obj.getLastname());
+    Set<Movie> movieCollection = new TreeSet<>(comparatorM);
+    Set<Actor> actorCollection = new TreeSet<>(comparatorA);
 
     //создаем синглтон
     private static MovieCollection instance;
@@ -34,45 +36,67 @@ public class MovieCollection implements Serializable {
         return instance;
     }
 
+    public Set<Movie> getMovieCollection() {
+        return movieCollection;
+    }
 
-    public Set<Movie> getCollection() {
-        return collection;
+    public Set<Actor> getActorCollection() {
+        return actorCollection;
     }
 
     public void addMovie(Movie movie){
-       collection.add(movie);
+       movieCollection.add(movie);
     }
 
     public void deleteMovie(String movieName){
-        Iterator<Movie> iter = collection.iterator();
+        Iterator<Movie> iter = movieCollection.iterator();
         while(iter.hasNext()){
             Movie iterMovie = iter.next();
             if (iterMovie.getName().equals(movieName)){
+                for (Actor actor: iterMovie.getCast()) {
+                    actor.removeMovie(iterMovie);
+                }
                 iter.remove();
-            }
-        }
-    }
-
-    public Set<Actor> getSetOfAllActors(){
-        Set<Actor> setOfAllActors = new HashSet<>();
-        for (Movie anyMovie : collection){
-            setOfAllActors.addAll(anyMovie.getCast());
-        }
-        return setOfAllActors;
-    }
-
-    public String addActorToMovieByMovieName(String movieName, Actor actor) {
-        String result = "";
-        for (Movie movie : collection) {
-            if (movie.getName().equals(movieName)) {
-                result = movie.addActor(actor) + "\n" + actor.addMovie(movie);
                 break;
             }
         }
-        return result;
+    }
+
+    public void addActorToMovieByMovieName(String movieName, Actor actor) {
+        for (Movie movie : movieCollection) {
+            if (movie.getName().equals(movieName)) {
+                movie.addActor(actor);
+                actor.addMovie(movie);
+                break;
+            }
+        }
+    }
+
+    public void deleteActor(String name, String lastName) {
+        Iterator<Actor> iter = actorCollection.iterator();
+        while(iter.hasNext()){
+            Actor iterActor = iter.next();
+            if (iterActor.getName().equals(name) && iterActor.getLastname().equals(lastName)){
+                for (Movie movie : iterActor.getFilmography()) {
+                    movie.deleteActor(iterActor);
+                }
+                iter.remove();
+                break;
+            }
+        }
     }
 
 
+    public String showCollection(){
+        StringBuilder resultString = new StringBuilder();
+        for (Movie movie : movieCollection){
+            resultString.append("\r").append(movie).append("\n");
+            for (Actor actor : movie.getCast()){
+                resultString.append("\t").append(actor).append("\n");
+            }
+        }
+        return resultString.toString();
+    }
 
 
 

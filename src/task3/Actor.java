@@ -11,11 +11,6 @@ public class Actor implements Serializable {
     private String lastname;
     private Set<Movie> filmography;
 
-    final String ADDED = "Фильм добавлен в список";
-    final String ALREADY_ON_THE_LIST = "Фильм уже есть в списке";
-    final String REMOVED = "Фильм удален из списка";
-    final String NOT_ON_THE_LIST = "Фильма не было в списке";
-
     public Actor (String name, String lastname){
         this.name = name;
         this.lastname = lastname;
@@ -32,12 +27,12 @@ public class Actor implements Serializable {
         this.lastname = newLastname;
     }
 
-    public String addMovie (Movie movie){
-        return filmography.add(movie) ? ADDED : ALREADY_ON_THE_LIST;
+    public boolean addMovie (Movie movie){
+        return filmography.add(movie);
     }
 
-    public String removeMovie (Movie movie){
-        return filmography.remove(movie) ? REMOVED : NOT_ON_THE_LIST;
+    public boolean removeMovie (Movie movie){
+        return filmography.remove(movie);
     }
 
     public String getName(){
@@ -46,6 +41,12 @@ public class Actor implements Serializable {
 
     public String getLastname(){
         return lastname;
+    }
+
+    public Set<Movie> getFilmography() {return filmography; }
+
+    public String toString(){
+        return "Actor's name: " + name + lastname;
     }
 
 }
