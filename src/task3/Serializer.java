@@ -6,27 +6,26 @@ package task3;
  коллекции использовать  сериализацию/десериализацию.*/
 
 import java.io.*;
-import java.util.Set;
 
 /* Класс для осуществления сериализации-десериализации */
 
 public class Serializer {
 
-    public static void serializeObj(String filename, MovieCollection movieCollection) throws IOException {
+    public static void serializeObj(String filename, IMDBCollection IMDBCollection) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
-        movieCollection.increaseVersion();
-        oos.writeObject(movieCollection);
+        IMDBCollection.increaseVersion();
+        oos.writeObject(IMDBCollection);
         oos.flush();
         oos.close();
-        System.out.print("Объект был сериализован, версия коллекции: " + movieCollection.getVersion());
+        System.out.print("Объект был сериализован, версия коллекции: " + IMDBCollection.getVersion());
     }
 
-    public static MovieCollection deserializeObj(String filename) throws IOException, ClassNotFoundException {
+    public static IMDBCollection deserializeObj(String filename) throws IOException, ClassNotFoundException {
         ObjectInputStream oin = new ObjectInputStream(new FileInputStream(filename));
-        MovieCollection movieCollection = (MovieCollection) oin.readObject();
-        System.out.print("Объект был десериализован, версия коллекции: " + movieCollection.getVersion());
+        IMDBCollection IMDBCollection = (IMDBCollection) oin.readObject();
+        System.out.print("Объект был десериализован, версия коллекции: " + IMDBCollection.getVersion());
         oin.close();
-        return movieCollection;
+        return IMDBCollection;
 
     }
 }

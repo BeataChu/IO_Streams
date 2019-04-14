@@ -21,31 +21,31 @@ public void setUp() {
     movie = new Movie(movieName1, year1);
 }
 
+    @Test
+    public void addActorOnceReturnTrue(){
+        assertTrue(movie.addActor(actor));
+    }
+    @Test
+    public void addActorTwiceReturnFalse(){
+        movie.addActor(actor);
+        assertFalse(movie.addActor(actor));
+    }
 
     @Test
-    public void changeNameTest(){
-       movie.changeMovieName(movieName2);
+    public void deleteActorFromCastReturnTrue(){
+        movie.addActor(actor);
+        assertTrue(movie.removeActor(actor));
+    }
+
+    @Test
+    public void deleteActorNotPresentInCastReturnFalse() {
+        assertFalse(movie.removeActor(actor));
+    }
+
+    @Test
+    public void changeMovieNameTest(){
+        movie.changeMovieName(movieName2);
         assertEquals(movieName2, movie.getName());
     }
 
-    @Test
-    public void addActorOnceReturnAppropriateText(){
-        assertEquals(movie.ADDED, movie.addActor(actor));
-    }
-    @Test
-    public void addActorTwiceReturnAppropriateText(){
-        movie.addActor(actor);
-        assertEquals(movie.ALREADY_ON_THE_LIST, movie.addActor(actor));
-    }
-
-    @Test
-    public void removeActorFromTheListReturnText(){
-
-        assertEquals(movie.REMOVED, movie.deleteActor(actor));
-    }
-
-    @Test
-    public void removeMovieNotPresentOnTheListReturnText(){
-        assertEquals(actor.REMOVED, actor.removeMovie(movie));
-    }
 }

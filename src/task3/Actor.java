@@ -43,7 +43,9 @@ public class Actor implements Serializable {
         return lastname;
     }
 
-    public Set<Movie> getFilmography() {return filmography; }
+    public Set<Movie> getFilmography() {
+        return new HashSet<>(filmography);
+    }
 
     public String toString(){
         return "Actor's name: " + name + lastname;

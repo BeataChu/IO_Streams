@@ -15,41 +15,44 @@ public class ActorTest {
     String movieName = "Название фильма";
 
     @Before
-    public void setUp(){
+    public void setUp() {
         actor = new Actor(name1, lastname1);
         movie = new Movie(movieName, 1995);
     }
 
     @Test
-    public void changeNameTest(){
+    public void changeNameTest() {
         actor.changeName(name2);
         assertEquals(name2, actor.getName());
     }
 
     @Test
-    public void changeLastnameTest(){
+    public void changeLastnameTest() {
         actor.changeLastname(lastname2);
         assertEquals(lastname2, actor.getLastname());
     }
 
     @Test
-    public void addMovieOnceReturnAppropriateText(){
-        assertEquals(actor.ADDED, actor.addMovie(movie));
-    }
-    @Test
-    public void addMovieTwiceReturnAppropriateText(){
-        actor.addMovie(movie);
-        assertEquals(actor.ALREADY_ON_THE_LIST, actor.addMovie(movie));
+    public void addMovieToFilmographyOnceReturnTrue() {
+        assertTrue(actor.addMovie(movie));
     }
 
     @Test
-    public void removeMovieFromTheListReturnText(){
+    public void addMovieTwiceReturnFalse() {
         actor.addMovie(movie);
-        assertEquals(actor.REMOVED, actor.removeMovie(movie));
+        assertFalse(actor.addMovie(movie));
     }
 
     @Test
-    public void removeMovieNotPresentOnTheListReturnText(){
-        assertEquals(actor.NOT_ON_THE_LIST, actor.removeMovie(movie));
+    public void removeMovieFromSetReturnTrue() {
+        actor.addMovie(movie);
+        assertTrue(actor.removeMovie(movie));
+    }
+
+    @Test
+    public void removeMovieNotPresentInSetReturnFalse() {
+        actor.addMovie(movie);
+        actor.removeMovie(movie);
+        assertFalse(actor.removeMovie(movie));
     }
 }

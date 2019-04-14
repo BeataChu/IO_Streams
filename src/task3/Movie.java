@@ -21,12 +21,12 @@ public class Movie implements Serializable {
         return  cast.add(actor);
     }
 
-    public boolean deleteActor(Actor actor){
+    public boolean removeActor(Actor actor){
         return cast.remove(actor);
     }
 
     public Set<Actor> getCast() {
-        return cast;
+        return new HashSet<>(cast);
     }
 
     public int getYearOfRelease() {
