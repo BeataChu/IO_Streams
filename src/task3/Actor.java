@@ -48,7 +48,7 @@ public class Actor implements Serializable {
     }
 
     public String toString(){
-        return "Actor's name: " + name + lastname;
+        return "Actor's name: " + name + " " + lastname;
     }
 
 }

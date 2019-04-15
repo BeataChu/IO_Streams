@@ -18,11 +18,21 @@ public class IMDBCollection implements Serializable {
         version++;
     }
 
-    //компаратор на основе года выпуска фильма
+    /*АНЯ, КОМПИЛЯТОР ПРИ СЕРИАЛИЗАЦИИ РУГАЕТСЯ В ТЕСТЕ НА ЭТОМ МОМЕНТЕ - Я НЕ ЗНАЮ, КАК СДЕЛАТЬ СЕРИАЛИЗУЕМЫЙ КОМПАРАТОР,
+    МНЕ САМ СИНТАКСИС НЕПОНЯТЕН, так что я пока сделаю сеты несортированными
+
+
+    ВОТ ТАК БЫЛО РАНЬШЕ:
+    создаем сортированные сеты на основе компараторов
+
     Comparator<Movie> comparatorM = Comparator.comparing(obj -> obj.getYearOfRelease());
     Comparator<Actor> comparatorA = Comparator.comparing(obj -> obj.getLastname());
     private Set<Movie> movieCollection = new TreeSet<>(comparatorM);
     private Set<Actor> actorCollection = new TreeSet<>(comparatorA);
+    */
+
+    private Set<Movie> movieCollection = new HashSet<>();
+    private Set<Actor> actorCollection = new HashSet<>();
 
     //создаем синглтон
     private static IMDBCollection instance;
@@ -37,14 +47,17 @@ public class IMDBCollection implements Serializable {
         return instance;
     }
 
+    // добавляем фильм в коллекцию фильмов
     public boolean addMovie(Movie movie) {
         return movieCollection.add(movie);
     }
 
+    // добавляем актера в коллекцию актеров
     public boolean addActor(Actor actor) {
         return actorCollection.add(actor);
     }
 
+    //возвращаем экзмепляр фильма по его названию
     public Movie getMovieByMovieName(String movieName) {
         for (Movie movie : movieCollection) {
             if (movie.getName().equals(movieName)) {
@@ -54,6 +67,7 @@ public class IMDBCollection implements Serializable {
         return null;
     }
 
+    //возвращаем экземпляр актера по имени-фамилии
     public Actor getActorByName(String name, String lastName) {
         for (Actor actor : actorCollection) {
             if (actor.getName().equals(name) && actor.getLastname().equals(lastName)) {
@@ -63,6 +77,7 @@ public class IMDBCollection implements Serializable {
         return null;
     }
 
+    //удаляем фильм из коллекции фильмов и из фильмографии актеров
     public void deleteMovie(String movieName) {
         Movie movie = getMovieByMovieName(movieName);
         if (movie != null) {
@@ -73,6 +88,7 @@ public class IMDBCollection implements Serializable {
         }
     }
 
+    //добавляем экзмепляр актера в актерский состав фильма по имени-фамилии
     public void addActorToMovieByMovieName(String movieName, String name, String lastName) {
         Actor actor = getActorByName(name, lastName);
         Movie movie = getMovieByMovieName(movieName);
@@ -82,7 +98,7 @@ public class IMDBCollection implements Serializable {
         }
     }
 
-
+    //удаляем актера из актерской коллекции и из акт.состава фильма
     public void deleteActor(String name, String lastName) {
         Actor actor = getActorByName(name, lastName);
         if (actor != null) {
@@ -93,7 +109,7 @@ public class IMDBCollection implements Serializable {
         }
     }
 
-
+    //возвращаем коллекцию полностью в текстовом формате
     public String showCollection() {
         StringBuilder resultString = new StringBuilder();
         for (Movie movie : movieCollection) {
@@ -110,6 +126,7 @@ public class IMDBCollection implements Serializable {
         actorCollection.clear();
     }
 
+    //удаляем актера из акт.состава фильма и фильм из фильмографии актера (не удаляя сами объекты)
     public void removeLinkBetweenActorAndMovie(String name, String lastName, String movieName) {
         Actor actor = getActorByName(name, lastName);
         Movie movie = getMovieByMovieName(movieName);
