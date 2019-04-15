@@ -33,12 +33,12 @@ public class ActorTest {
     }
 
     @Test
-    public void addMovieToFilmographyOnceReturnTrue() {
+    public void addMovieToFilmographyNotPresentInSetReturnTrue() {
         assertTrue(actor.addMovie(movie));
     }
 
     @Test
-    public void addMovieTwiceReturnFalse() {
+    public void addMovieAlreadyPresentInSetReturnFalse() {
         actor.addMovie(movie);
         assertFalse(actor.addMovie(movie));
     }
@@ -55,4 +55,10 @@ public class ActorTest {
         actor.removeMovie(movie);
         assertFalse(actor.removeMovie(movie));
     }
+
+    @Test
+    public void returnProperStringForObject(){
+        assertEquals(String.format("Actor's name: %s %s", name1, lastname1), actor.toString());
+    }
+
 }

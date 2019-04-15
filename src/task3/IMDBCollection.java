@@ -134,7 +134,6 @@ public class IMDBCollection implements Serializable {
             movie.removeActor(actor);
             actor.removeMovie(movie);
         }
-
     }
 }
 

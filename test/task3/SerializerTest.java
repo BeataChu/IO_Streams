@@ -11,31 +11,32 @@ public class SerializerTest {
     String filePrefix = "inputFile1";
     String fileSuffix = ".tmp";
     File tempFile;
-    final String NAME1 = "Johnny";
-    final String LASTNAME1 = "Depp";
-    final String NAME2 = "Helena Bonham";
-    final String LASTNAME2 = "Carter";
-    final String MOVIE_NAME_1 = "Charlie and the Chocolate Factory";
-    final String MOVIE_NAME_2 = "What's Eating Gilbert Grape";
-    final int YEAR1 = 2005;
-    final int YEAR2 = 1993;
+    String name1 = "Johnny";
+    String lastname1 = "Depp ";
+    String name2 = "Helena Bonham";
+    String lastname2 = "Carter";
+    String movieName1 = "Charlie and the Chocolate Factory";
+    String movieName2 = "What's Eating Gilbert Grape";
+    int year1 = 2005;
+    int year2 = 1993;
     IMDBCollection imdb;
+    Actor actor1;
 
     @Before
     public void setUp() throws Exception {
         tempFile = createTempFile(filePrefix, fileSuffix);
         imdb = IMDBCollection.getInstance();
-        Actor actor1 = new Actor(NAME1, LASTNAME1);
-        Actor actor2 = new Actor(NAME2, LASTNAME2);
-        Movie movie1 = new Movie(MOVIE_NAME_1, YEAR1);
-        Movie movie2 = new Movie(MOVIE_NAME_2, YEAR2);
+        actor1 = new Actor(name1, lastname1);
+        Actor actor2 = new Actor(name2, lastname2);
+        Movie movie1 = new Movie(movieName1, year1);
+        Movie movie2 = new Movie(movieName2, year2);
         imdb.addMovie(movie1);
         imdb.addMovie(movie2);
         imdb.addActor(actor1);
         imdb.addActor(actor2);
-        imdb.addActorToMovieByMovieName(MOVIE_NAME_1, NAME1, LASTNAME1);
-        imdb.addActorToMovieByMovieName(MOVIE_NAME_2, NAME1, LASTNAME1);
-        imdb.addActorToMovieByMovieName(MOVIE_NAME_1, NAME2, LASTNAME2);
+        imdb.addActorToMovieByMovieName(movieName1, name1, lastname1);
+        imdb.addActorToMovieByMovieName(movieName2, name1, lastname1);
+        imdb.addActorToMovieByMovieName(movieName1, name2, lastname2);
     }
 
     @After
@@ -46,11 +47,13 @@ public class SerializerTest {
     @Test
     public void testSerialization() throws Exception
     {
-
             Serializer.serializeObj(tempFile.getAbsolutePath(), imdb);
             imdb = Serializer.deserializeObj(tempFile.getAbsolutePath());
+            /*непонятно, что с чем сравнивать. До этого я сравнивала по showCollection, но поскольку
+            теперь это у меня не сортированный список, вывод фильмов и актеров происходит в случайном
+            порядке
+             */
 
-        String expectedString = String.format("\rMovie name: %s, year: %d\n\tActor's name: %s %s\n\rMovie name: %s, year: %d\n\tActor's name: %s %s\n\tActor's name: %s %s\n", MOVIE_NAME_2, YEAR2, NAME1, LASTNAME1, MOVIE_NAME_1, YEAR1, NAME1, LASTNAME1, NAME2, LASTNAME2);
-        assertEquals(expectedString, imdb.showCollection());
+            assertEquals(actor1.toString(), imdb.getActorByName(name1, lastname1).toString());
     }
 }
