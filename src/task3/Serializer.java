@@ -9,23 +9,30 @@ import java.io.*;
 
 /* Класс для осуществления сериализации-десериализации */
 
-public class Serializer implements Serializable{
+public class Serializer implements Serializable {
 
-    public static void serializeObj(String filename, IMDBCollection imdb) throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename));
-        imdb.increaseVersion();
-        oos.writeObject(imdb);
-        oos.flush();
-        oos.close();
-        System.out.println("Объект был сериализован, версия коллекции: " + imdb.getVersion());
+    public static void serializeObj(String filename, IMDBCollection imdb) {
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
+            imdb.increaseVersion();
+            oos.writeObject(imdb);
+            System.out.println("Объект был сериализован, версия коллекции: " + imdb.getVersion());
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     public static IMDBCollection deserializeObj(String filename) throws IOException, ClassNotFoundException {
-        ObjectInputStream oin = new ObjectInputStream(new FileInputStream(filename));
-        IMDBCollection IMDBCollection = (IMDBCollection) oin.readObject();
-        System.out.println("Объект был десериализован, версия коллекции: " + IMDBCollection.getVersion());
-        oin.close();
-        return IMDBCollection;
+        IMDBCollection imdb = null;
+        try (ObjectInputStream oin = new ObjectInputStream(new FileInputStream(filename))) {
+            imdb = (IMDBCollection) oin.readObject();
+            System.out.println("Объект был десериализован, версия коллекции: " + imdb.getVersion());
+            oin.close();
+
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return imdb;
 
     }
 }

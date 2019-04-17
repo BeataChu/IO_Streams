@@ -18,6 +18,7 @@ public class IMDBCollection implements Serializable {
         version++;
     }
 
+   
     /*АНЯ, КОМПИЛЯТОР ПРИ СЕРИАЛИЗАЦИИ РУГАЕТСЯ В ТЕСТЕ НА ЭТОМ МОМЕНТЕ - Я НЕ ЗНАЮ, КАК СДЕЛАТЬ СЕРИАЛИЗУЕМЫЙ КОМПАРАТОР,
     МНЕ САМ СИНТАКСИС НЕПОНЯТЕН, так что я пока сделаю сеты несортированными
 
@@ -134,6 +135,15 @@ public class IMDBCollection implements Serializable {
             movie.removeActor(actor);
             actor.removeMovie(movie);
         }
+    }
+
+    //сервисные методы, которые возвращают размер сетов
+    public int getNumberOfMovies(){
+        return movieCollection.size();
+    }
+
+    public int getNumberOfActors(){
+        return actorCollection.size();
     }
 }
 

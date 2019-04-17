@@ -33,8 +33,7 @@ public class KeyWordCounterTest {
         String[] arr = {"a", "b", "while", "while", "void"};
         testKeyMap.put("void", 1);
         testKeyMap.put("while", 2);
-        myKeyCounter.addKeysToMap(arr);
-        assertEquals(testKeyMap, myKeyCounter.getMap());
+        assertEquals(testKeyMap, myKeyCounter.addKeysToMap(arr));
 
     }
 
@@ -42,31 +41,29 @@ public class KeyWordCounterTest {
     public void testWhenNullArrThrowsException() {
         expectedException.expect(NullPointerException.class);
         String[] arr = null;
-        myKeyCounter.addKeysToMap(arr);
-        assertNull(("Словарь должен быть пустым"), myKeyCounter.getMap());
+        assertNull(("Словарь должен быть пустым"), myKeyCounter.addKeysToMap(arr));
     }
 
     @Test
     public void testAddNoKeysToMap() {
         String[] arr = {"a", "b", "c"};
-        myKeyCounter.addKeysToMap(arr);
-        assertEquals(testKeyMap, myKeyCounter.getMap());
+        assertEquals(testKeyMap, myKeyCounter.addKeysToMap(arr));
     }
 
     @Test
     public void testToString() {
         String expected = "Ключевое слово: void, число вхождений: 1\nКлючевое слово: while, число вхождений: 2\n";
         String[] arr = {"void", "while", "while"};
-        myKeyCounter.addKeysToMap(arr);
-        assertEquals(expected, myKeyCounter.toString());
+        testKeyMap = myKeyCounter.addKeysToMap(arr);
+        assertEquals(expected, myKeyCounter.toString(testKeyMap));
     }
 
     @Test
     public void testToStringNoKeyWords() {
         String expected = "";
         String[] arr = {"a", "b", "c"};
-        myKeyCounter.addKeysToMap(arr);
-        assertEquals(expected, myKeyCounter.toString());
+        testKeyMap = myKeyCounter.addKeysToMap(arr);
+        assertEquals(expected, myKeyCounter.toString(testKeyMap));
     }
 
 

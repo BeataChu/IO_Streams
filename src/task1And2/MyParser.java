@@ -2,6 +2,7 @@ package task1And2;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 /* класс для запуска работы потоков */
 public class MyParser {
@@ -25,8 +26,8 @@ public class MyParser {
             inputFile = consoleUtilities.readFileName("Введите имя файла для чтения:");
             String outputFile = consoleUtilities.readFileName("Введите имя файла для записи:");
             String[] words = stream.readText(inputFile);
-            data.addKeysToMap(words);
-            String result = data.toString();
+            Map<String,Integer> keyMap = data.addKeysToMap(words);
+            String result = data.toString(keyMap);
 
             if (result.length() < 1) {
                 System.out.println(NO_KEY_WORDS);

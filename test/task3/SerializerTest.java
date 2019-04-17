@@ -21,15 +21,18 @@ public class SerializerTest {
     int year2 = 1993;
     IMDBCollection imdb;
     Actor actor1;
+    Actor actor2;
+    Movie movie1;
+    Movie movie2;
 
     @Before
     public void setUp() throws Exception {
         tempFile = createTempFile(filePrefix, fileSuffix);
         imdb = IMDBCollection.getInstance();
         actor1 = new Actor(name1, lastname1);
-        Actor actor2 = new Actor(name2, lastname2);
-        Movie movie1 = new Movie(movieName1, year1);
-        Movie movie2 = new Movie(movieName2, year2);
+        actor2 = new Actor(name2, lastname2);
+        movie1 = new Movie(movieName1, year1);
+        movie2 = new Movie(movieName2, year2);
         imdb.addMovie(movie1);
         imdb.addMovie(movie2);
         imdb.addActor(actor1);
@@ -41,19 +44,24 @@ public class SerializerTest {
 
     @After
     public void tearDown() throws Exception {
-       tempFile.deleteOnExit();
+        tempFile.deleteOnExit();
     }
 
+    /*"как и обсуждали, можно проверить размер и contains" - к сожалению, поля с сетами фильмов и актеров
+    у меня приватные, но сделать их публичными ради тестов - так себе решение.
+    Пришлось написать для них метод getSize(); */
     @Test
-    public void testSerialization() throws Exception
-    {
-            Serializer.serializeObj(tempFile.getAbsolutePath(), imdb);
-            imdb = Serializer.deserializeObj(tempFile.getAbsolutePath());
-            /*непонятно, что с чем сравнивать. До этого я сравнивала по showCollection, но поскольку
-            теперь это у меня не сортированный список, вывод фильмов и актеров происходит в случайном
-            порядке
-             */
+    public void serializeDeserializeTest() throws Exception {
+        Serializer.serializeObj(tempFile.getAbsolutePath(), imdb);
+        imdb = Serializer.deserializeObj(tempFile.getAbsolutePath());
+        Integer two = 2;
+        //ты говорила, что лучше сравнивать известное в начале с неизвестным в скобках, чтобы избежать NullPointerEx.
+        assertTrue(two.equals(imdb.getNumberOfActors())
+                && two.equals(imdb.getNumberOfMovies())
+                && actor1.toString().equals((imdb.getActorByName(name1, lastname1)).toString())
+                && actor2.toString().equals((imdb.getActorByName(name2, lastname2)).toString())
+                && movie1.toString().equals((imdb.getMovieByMovieName(movieName1)).toString())
+                && movie2.toString().equals((imdb.getMovieByMovieName(movieName2)).toString()));
 
-            assertEquals(actor1.toString(), imdb.getActorByName(name1, lastname1).toString());
     }
 }
